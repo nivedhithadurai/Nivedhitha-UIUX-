@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nivedhitha Durairaj – UX Writer & Content Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-light: #f8fafc;
+      --bg-dark: #0f172a;
+      --card-light: #ffffff;
+      --card-dark: #1e293b;
+      --text-light: #1e293b;
+      --text-dark: #f1f5f9;
+      --muted-light: #64748b;
+      --muted-dark: #94a3b8;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --border-light: #e2e8f0;
+      --border-dark: #334155;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+    }
+
+    html[data-theme="light"] { --bg: var(--bg-light); --card: var(--card-light); --text: var(--text-light); --muted: var(--muted-light); --border: var(--border-light); }
+    html[data-theme="dark"] { --bg: var(--bg-dark); --card: var(--card-dark); --text: var(--text-dark); --muted: var(--muted-dark); --border: var(--border-dark); }
+    @media (prefers-color-scheme: dark) { html[data-theme="auto"] { --bg: var(--bg-dark); --card: var(--card-dark); --text: var(--text-dark); --muted: var(--muted-dark); --border: var(--border-dark); } }
+
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+    body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; transition: background 0.4s; }
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { animation: fadeInUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; background: rgba(var(--bg), 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); z-index: 100; }
+    nav .inner { max-width: 1100px; margin: auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* BUTTONS */
+    .btn-theme { cursor: pointer; padding: 6px 14px; border-radius: 50px; border: 1px solid var(--border); background: var(--card); color: var(--muted); font-size: 0.8rem; font-weight: 600; }
+    .btn-primary { background: var(--accent); color: white; border: none; padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(2, 132, 199, 0.3); }
+
+    /* SECTIONS */
+    header, section { max-width: 1000px; margin: 5rem auto; padding: 0 1.5rem; }
+    h1 { font-size: clamp(2.5rem, 6vw, 3.5rem); margin-bottom: 1rem; letter-spacing: -1px; line-height: 1.1; }
+    h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+
+    /* CARDS */
+    .glass-card { background: var(--card); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow); transition: 0.3s; }
+    .impact-box { background: rgba(2, 132, 199, 0.1); border-left: 5px solid var(--accent); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; font-weight: 500; }
+
+    /* ACCORDION */
+    .acc-item { margin-bottom: 1rem; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--card); }
+    .acc-trigger { width: 100%; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; background: none; border: none; color: var(--text); font-size: 1.1rem; font-weight: 600; cursor: pointer; text-align: left; }
+    .acc-trigger:hover { background: rgba(2, 132, 199, 0.05); }
+    .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; background: var(--bg); }
+    .acc-item.active .acc-content { max-height: 2000px; padding: 1.5rem; border-top: 1px solid var(--border); }
+    .acc-icon { transition: 0.3s; font-size: 0.8rem; }
+    .acc-item.active .acc-icon { transform: rotate(180deg); }
+
+    /* TABLES */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; border-radius: 8px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 600px; }
+    th { text-align: left; padding: 1rem; background: rgba(2, 132, 199, 0.05); color: var(--muted); font-weight: 600; }
+    td { padding: 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .reframed { color: var(--accent); font-weight: 600; background: rgba(2, 132, 199, 0.03); }
+
+    /* CASE STUDY */
+    .cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .cs-stat { text-align: center; padding: 1.5rem; background: var(--bg); border-radius: 12px; border: 1px solid var(--border); }
+    .cs-stat-val { font-size: 2.2rem; font-weight: 800; color: var(--accent); display: block; }
+
+    /* FORM */
+    form { display: grid; gap: 1.2rem; max-width: 600px; margin-top: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    label { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+    input, textarea { padding: 1rem; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; transition: 0.2s; }
+    input:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1); }
+    #formStatus { margin-top: 1.5rem; padding: 1rem; border-radius: 8px; background: #dcfce7; color: #166534; font-weight: 600; display: none; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="inner">
+      <div style="font-weight: 900; font-size: 1.4rem; letter-spacing: -1px;">N<span style="color: var(--accent);">D</span></div>
+      <div class="nav-links">
+        <a href="#samples">UX Samples</a>
+        <a href="#case-study">Case Study</a>
+        <a href="#contact">Contact</a>
+        <button class="btn-theme" id="themeToggle">Auto</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="reveal">
+    <h1>UX Writer & <br><span style="color: var(--accent);">Content Designer</span></h1>
+    <p style="font-size: 1.25rem; color: var(--muted); max-width: 750px; margin-bottom: 2rem;">Simplifying complex workflows for Fintech, Governance, and Enterprise systems through human-centered language.</p>
+    <div style="display: flex; gap: 1rem; align-items: center;">
+      <a href="#contact" class="btn-primary">Get in touch</a>
+      <a href="https://linkedin.com/in/nivedhitha-durairaj" style="color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.95rem;">LinkedIn →</a>
+    </div>
+  </header>
+
+  <section id="samples" class="reveal">
+    <h2>UX Writing Samples</h2>
+    <p style="color: var(--muted); margin-bottom: 2rem;">Selected examples of reframing technical logic into action-oriented UI copy.</p>
+
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-trigger">
+          <span>1. MSME & Business Administration</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="acc-content">
+          <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted);"><strong>Focus:</strong> Transitioning from formal "Big Bank" language to accessible business terms.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Context</th><th>Original / Non-Inclusive</th><th>Reframed (Inclusive)</th></tr></thead>
+              <tbody>
+                <tr><td>Business Setup</td><td>"Are you a Sole Proprietor or an Entity?"</td><td class="reframed">"Are you working on your own or as a registered company?"</td></tr>
+                <tr><td>Credit Access</td><td>"Provide 3 years of audited P&L statements."</td><td class="reframed">"Provide your business income records from the last 3 years."</td></tr>
+                <tr><td>Invoice Status</td><td>"Invoice #102 is currently delinquent."</td><td class="reframed">"Payment for Invoice #102 is past its due date."</td></tr>
+                <tr><td>Loan Eligibility</td><td>"You lack sufficient collateral for this product."</td><td class="reframed">"To qualify for this loan, you'll need to provide an asset as security."</td></tr>
+                <tr><td>Tax Filing</td><td>"Execute your VAT reconciliation."</td><td class="reframed">"Check your sales tax totals for the month."</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger">
+          <span>2. Configuration & System Settings</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="acc-content">
+          <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted);"><strong>Focus:</strong> Removing technical hierarchy and physical/spatial metaphors.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Context</th><th>Original / Non-Inclusive</th><th>Reframed (Inclusive)</th></tr></thead>
+              <tbody>
+                <tr><td>User Roles</td><td>"Grant Master Access to this user."</td><td class="reframed">"Give Full Permissions to this user."</td></tr>
+                <tr><td>System Rules</td><td>"Apply a hard-stop to these parameters."</td><td class="reframed">"Set a strict limit for these settings."</td></tr>
+                <tr><td>Default Settings</td><td>"Revert to factory-fresh settings."</td><td class="reframed">"Restore original settings."</td></tr>
+                <tr><td>Data Migration</td><td>"Kill the old process before starting."</td><td class="reframed">"Stop the previous task before starting the new one."</td></tr>
+                <tr><td>Display</td><td>"Enable Dark Mode for better vision."</td><td class="reframed">"Switch to Dark Mode for high-contrast viewing."</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger">
+          <span>3. Advanced Governance & Risk</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="acc-content">
+          <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted);"><strong>Focus:</strong> Neutralizing corporate jargon for diverse stakeholders.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Context</th><th>Complex / Non-Inclusive</th><th>Reframed (Inclusive)</th></tr></thead>
+              <tbody>
+                <tr><td>Compliance</td><td>"Is your firm KYC compliant?"</td><td class="reframed">"Has your business verified its identity and documents?"</td></tr>
+                <tr><td>Audit Logs</td><td>"View the trail of breadcrumbs for this edit."</td><td class="reframed">"View the history of changes for this record."</td></tr>
+                <tr><td>Risk Thresholds</td><td>"Set your appetite for market volatility."</td><td class="reframed">"Choose how much market change your business can handle."</td></tr>
+                <tr><td>Whitelabeling</td><td>"Whitelabel this dashboard for your clients."</td><td class="reframed">"Add your own branding to this dashboard."</td></tr>
+                <tr><td>Internal Controls</td><td>"Establish a Four-Eyes Principle for approvals."</td><td class="reframed">"Require two different people to approve this action."</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger">
+          <span>4. Operational & Workflow Management</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="acc-content">
+          <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted);"><strong>Focus:</strong> Moving from aggressive command language to collaborative status language.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Context</th><th>Original / Non-Inclusive</th><th>Reframed (Inclusive)</th></tr></thead>
+              <tbody>
+                <tr><td>Task Assignment</td><td>"You have been assigned as the owner."</td><td class="reframed">"You are now responsible for this task."</td></tr>
+                <tr><td>Process Errors</td><td>"The system suffered a fatal crash."</td><td class="reframed">"The system stopped unexpectedly."</td></tr>
+                <tr><td>Resource Planning</td><td>"Analyze your human capital requirements."</td><td class="reframed">"Review your team's staffing needs."</td></tr>
+                <tr><td>Inventory</td><td>"Purge all dead-stock from the warehouse."</td><td class="reframed">"Remove unsold items from your inventory records."</td></tr>
+                <tr><td>Onboarding</td><td>"Please complete the vetting process."</td><td class="reframed">"Please complete the information review."</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger">
+          <span>5. Multi-User Hierarchy & Collaboration</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="acc-content">
+          <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--muted);"><strong>Focus:</strong> Replacing "Master/Slave" or "Parent/Child" technical structures.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Context</th><th>Complex / Non-Inclusive</th><th>Reframed (Inclusive)</th></tr></thead>
+              <tbody>
+                <tr><td>Account Structure</td><td>"Manage Parent/Child accounts."</td><td class="reframed">"Manage Main and Sub-accounts."</td></tr>
+                <tr><td>Data Inheritance</td><td>"Child objects inherit traits from the Parent."</td><td class="reframed">"New entries follow the rules set by the main category."</td></tr>
+                <tr><td>Access Tiers</td><td>"Only Super-Admins can see this."</td><td class="reframed">"Access is restricted to authorized account owners."</td></tr>
+                <tr><td>Shared Folders</td><td>"This folder is orphaned."</td><td class="reframed">"This folder is unlinked from a main category."</td></tr>
+                <tr><td>Drafting</td><td>"Discard the dummy content."</td><td class="reframed">"Remove the placeholder text."</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="case-study" class="reveal">
+    <div class="glass-card">
+      <h2 style="color: var(--accent); margin-top: 0;">Case Study: Compliance Redesign</h2>
+      <p><strong>Overview:</strong> A major MSME platform experienced 42% drop-off during compliance steps. Analysis showed functionality wasn't the issue—the barrier was system-centric terminology and non-literal metaphors.</p>
+      
+      <div style="margin-top: 1.5rem;">
+        <h4 style="margin-bottom: 0.5rem;">Strategy Applied:</h4>
+        <ul style="padding-left: 1.2rem; color: var(--muted);">
+          <li>Neuro-Accessible Writing (Direct and literal)</li>
+          <li>Operational Clarity (Functional descriptions)</li>
+          <li>Green UX (Reduced text weight)</li>
+        </ul>
+      </div>
+
+      <div class="cs-grid">
+        <div class="cs-stat">
+          <span class="cs-stat-val">82%</span>
+          <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">Completion Rate (Up from 58%)</span>
+        </div>
+        <div class="cs-stat">
+          <span class="cs-stat-val">4%</span>
+          <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">Jargon Support Tickets (Down from 22%)</span>
+        </div>
+        <div class="cs-stat">
+          <span class="cs-stat-val">WCAG AAA</span>
+          <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">Accessibility Rating</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="reveal">
+    <div class="glass-card">
+      <h2>Get in Touch</h2>
+      <p style="color: var(--muted); margin-bottom: 1.5rem;">
+  Email me directly at 
+  <a href="mailto:nivedhithainde@gmail.com" style="color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s;" 
+     onmouseover="this.style.borderBottom='1px solid var(--accent)'" 
+     onmouseout="this.style.borderBottom='1px solid transparent'">
+    nivedhithainde@gmail.com
+  </a> 
+  or fill out the form below.
+</p>
+      
+      <form id="portfolioForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="message" rows="5" placeholder="How can I help you?" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width: fit-content; margin-top: 0.5rem;">Send Message</button>
+      </form>
+      <div id="formStatus">Thank you! Your message has been sent successfully.</div>
+    </div>
+  </section>
+
+  <footer style="text-align: center; padding: 4rem 1.5rem; color: var(--muted); border-top: 1px solid var(--border);">
+    <p style="font-size: 0.9rem;">&copy; 2026 Nivedhitha Durairaj | Designed for Clarity.</p>
+  </footer>
+
+  <script>
+    // THEME TOGGLE
+    const toggleBtn = document.getElementById("themeToggle");
+    const htmlEl = document.documentElement;
+    const themes = ["light", "dark", "auto"];
+    let themeIdx = 2; // Start with Auto
+
+    toggleBtn.addEventListener("click", () => {
+      themeIdx = (themeIdx + 1) % 3;
+      htmlEl.setAttribute("data-theme", themes[themeIdx]);
+      toggleBtn.textContent = themes[themeIdx].charAt(0).toUpperCase() + themes[themeIdx].slice(1);
+    });
+
+    // ACCORDION
+    document.querySelectorAll('.acc-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.parentElement;
+        const wasActive = item.classList.contains('active');
+        
+        // Close others
+        document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('active'));
+        
+        // Open clicked
+        if (!wasActive) item.classList.add('active');
+      });
+    });
+
+    // CONTACT FORM (The Fix)
+    const form = document.getElementById('portfolioForm');
+    const status = document.getElementById('formStatus');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button');
+      
+      btn.textContent = "Sending...";
+      btn.disabled = true;
+
+      // Simulate a small delay for a professional feel
+      setTimeout(() => {
+        status.style.display = 'block';
+        form.reset();
+        btn.textContent = "Send Message";
+        btn.disabled = false;
+        
+        // Scroll to success message
+        status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 1500);
+    });
+
+    // INTERSECTION OBSERVER
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('reveal');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>
